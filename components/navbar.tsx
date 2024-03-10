@@ -8,9 +8,10 @@ export default function Navbar() {
  const pathname = usePathname()
  return (
   <>
-   {pathname !== "/" && <Link href={`/`} className='link bg-black text-white mb-2'>
-    Back
-   </Link>}
+   {pathname !== "/" &&
+    <Link href={`/`} className='link bg-black text-white mb-2'>
+     Back
+    </Link>}
   </>
  )
 }
