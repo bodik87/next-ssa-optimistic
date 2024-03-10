@@ -22,13 +22,16 @@ export default function Elements({ items }: { items: Item[] }) {
   async function action(data: FormData) {
     const id = crypto.randomUUID()
     const title = data.get('title')
+    const rack = data.get('rack')
+    const place = data.get('place')
+    const info = data.get('info')
     if (typeof title !== 'string' || !title) return
+    if (typeof rack !== 'string' || !rack) return
+    if (typeof place !== 'string' || !place) return
+    if (typeof info !== 'string' || !info) return
     if (title === '') return
 
-    const newItem = {
-      id: id,
-      title,
-    }
+    const newItem = { id, title, rack, place, info }
 
     formRef.current?.reset()
     addOptimisticItem(newItem)
@@ -100,7 +103,7 @@ export default function Elements({ items }: { items: Item[] }) {
               <div className='p-2 border even:bg-gray-100 rounded-md flex justify-between' key={el.id}>
                 <span>{el.title}</span>
                 <div>
-                  <span>{el.regal}-{el.place}</span>
+                  <span>{el.rack}-{el.place}</span>
                 </div>
 
               </div>

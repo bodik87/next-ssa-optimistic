@@ -11,6 +11,6 @@ model Item {
   id          String    @id @unique
   title       String
   place       String?
-  regal       String?
+  rack        String?
   info        String?
 }
