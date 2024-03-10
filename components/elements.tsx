@@ -97,13 +97,19 @@ export default function Elements({ items }: { items: Item[] }) {
         <div className='mt-2 flex flex-col gap-2'>
           {filteredItems?.map(
             el =>
-              <div className='p-2 border even:bg-gray-100 rounded-md' key={el.id}>{el.title}</div>
+              <div className='p-2 border even:bg-gray-100 rounded-md flex justify-between' key={el.id}>
+                <span>{el.title}</span>
+                <div>
+                  <span>{el.regal}-{el.place}</span>
+                </div>
+
+              </div>
           )}
         </div>}
 
-      <ul className='mt-4 flex flex-col gap-1'>
+      {/* <ul className='mt-4 flex flex-col gap-1'>
         {optimisticItems?.map(el => <Element key={el.id} todo={el} />)}
-      </ul>
+      </ul> */}
 
     </>
   )

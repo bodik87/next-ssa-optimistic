@@ -10,4 +10,7 @@ datasource db {
 model Item {
   id          String    @id @unique
   title       String
+  place       String?
+  regal       String?
+  info        String?
 }
