@@ -17,7 +17,7 @@ export function DeleteForm({ id }: { id: string }) {
   return (
     <form action={action}>
       <input type="hidden" name="id" value={id} />
-      <Button label="Delete" color="delete" />
+      <Button label="Delete" color="delete" width="full" />
     </form>
   );
 }
