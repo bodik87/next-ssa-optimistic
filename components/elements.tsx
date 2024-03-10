@@ -3,14 +3,15 @@
 import { useOptimistic, useRef, useState } from 'react'
 import type { Item } from '@prisma/client'
 import { createItemAction } from '@/app/actions'
-import Element from '@/components/element'
 import Button from '@/components/button'
+import Link from 'next/link'
 
 export default function Elements({ items }: { items: Item[] }) {
   const formRef = useRef<HTMLFormElement>(null)
   const queryRef = useRef<HTMLInputElement>(null)
 
   const [query, setQuery] = useState('')
+  const [visibleCreateForm, setVisibleCreateForm] = useState(false)
 
   const [optimisticItems, addOptimisticItem] = useOptimistic(
     items,
@@ -21,22 +22,19 @@ export default function Elements({ items }: { items: Item[] }) {
 
   async function action(data: FormData) {
     const id = crypto.randomUUID()
-    const title = data.get('title')
-    const rack = data.get('rack')
-    const place = data.get('place')
-    const info = data.get('info')
+    const title = data.get('title') as string
+    const rack = data.get('rack') as string
+    const place = data.get('place') as string
+    const info = data.get('info') as string
     if (typeof title !== 'string' || !title) return
-    if (typeof rack !== 'string' || !rack) return
-    if (typeof place !== 'string' || !place) return
-    if (typeof info !== 'string' || !info) return
-    if (title === '') return
 
     const newItem = { id, title, rack, place, info }
 
     formRef.current?.reset()
+    setVisibleCreateForm(false)
     addOptimisticItem(newItem)
 
-    const result = await createItemAction(id, title)
+    const result = await createItemAction(id, title, rack, place, info)
 
     if (result?.error) {
       console.error(result.error)
@@ -61,20 +59,66 @@ export default function Elements({ items }: { items: Item[] }) {
 
   return (
     <>
-      <form
-        ref={formRef}
-        action={action}
-        autoComplete='off'
-        className='w-full flex flex-col gap-3'
-      >
-        <input
-          type='text'
-          autoComplete='off'
-          name='title'
-          placeholder='Add a new item'
-        />
-        <Button label='Create' color='create' />
-      </form>
+      <Link href={"/items"}
+        className='mb-2 w-full link text-center bg-gray-300'>
+        All items
+      </Link>
+
+      {visibleCreateForm &&
+        <>
+          <form
+            ref={formRef}
+            action={action}
+            autoComplete='off'
+            className='w-full flex flex-col gap-3'
+          >
+            <input
+              type='text'
+              autoComplete='off'
+              name='title'
+              placeholder='Title'
+              required
+            />
+            <div className='flex gap-3'>
+              <input
+                type='text'
+                autoComplete='off'
+                name='rack'
+                placeholder='Rack'
+              />
+              <input
+                type='text'
+                autoComplete='off'
+                name='place'
+                placeholder='Place'
+              />
+            </div>
+            <input
+              type='text'
+              autoComplete='off'
+              name='info'
+              placeholder='Info'
+            />
+            <Button label='Create' color='create' width='full' />
+
+          </form>
+          <button
+            type='button'
+            className='mt-2 w-full'
+            onClick={() => setVisibleCreateForm(false)}>
+            Cancel
+          </button>
+        </>
+      }
+
+      {!visibleCreateForm &&
+        <button
+          type='button'
+          className='mt-2 w-full bg-green-600 text-white'
+          onClick={() => setVisibleCreateForm(true)}>
+          Create item
+        </button>
+      }
 
       {optimisticItems.length > 0 && (
         <div className='mt-8 relative'>
@@ -109,11 +153,6 @@ export default function Elements({ items }: { items: Item[] }) {
               </div>
           )}
         </div>}
-
-      {/* <ul className='mt-4 flex flex-col gap-1'>
-        {optimisticItems?.map(el => <Element key={el.id} todo={el} />)}
-      </ul> */}
-
     </>
   )
 }

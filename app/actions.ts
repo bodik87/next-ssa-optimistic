@@ -3,9 +3,15 @@
 import { createItem, deleteItem, updateItem } from "@/lib/items";
 import { revalidatePath } from "next/cache";
 
-export async function createItemAction(id: string, title: string) {
+export async function createItemAction(
+  id: string,
+  title: string,
+  rack: string | null,
+  place: string | null,
+  info: string | null
+) {
   try {
-    await createItem(id, title);
+    await createItem(id, title, rack, place, info);
   } catch (error: any) {
     return { error: error?.message || "Failed to add todo." };
   } finally {

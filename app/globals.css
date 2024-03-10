@@ -17,6 +17,7 @@ input {
   @apply w-full border-2 rounded-md px-4 py-3 outline-none;
 }
 
-button {
-  @apply border rounded-md px-3 py-2 disabled:opacity-50;
+button,
+.link {
+  @apply flex items-center justify-center border rounded-md px-3 py-2 disabled:opacity-50;
 }

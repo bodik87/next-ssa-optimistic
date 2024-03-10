@@ -9,9 +9,17 @@ export async function getItems() {
   }
 }
 
-export async function createItem(id: string, title: string) {
+export async function createItem(
+  id: string,
+  title: string,
+  rack: string | null,
+  place: string | null,
+  info: string | null
+) {
   try {
-    const item = await prisma.item.create({ data: { id, title } });
+    const item = await prisma.item.create({
+      data: { id, title, rack, place, info },
+    });
     return { item };
   } catch (error) {
     return { error };
