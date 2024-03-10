@@ -5,14 +5,14 @@ import { Item } from '@prisma/client'
 import { updateItemAction } from '@/app/actions'
 import { DeleteForm } from './delete-form'
 
-export default function Element({ todo }: { todo: Item }) {
-  const [optimisticTodo, updateTodo] = useOptimistic(
-    todo, (todo) => { return { ...todo } }
+export default function Element({ item }: { item: Item }) {
+  const [optimisticItem, updateItem] = useOptimistic(
+    item, (item) => { return { ...item } }
   )
 
   async function handleChange(title: string) {
 
-    const result = await updateItemAction(optimisticTodo.id, title)
+    const result = await updateItemAction(optimisticItem.id, title)
 
     if (result?.error) {
       console.error(result.error)
@@ -21,14 +21,15 @@ export default function Element({ todo }: { todo: Item }) {
 
   return (
     <li className='flex items-center justify-between gap-3'>
-      <label
-        htmlFor={optimisticTodo.id}
-        className='cursor-pointer peer-data-[state=checked]:text-gray-500 peer-data-[state=checked]:line-through'
-      >
-        {optimisticTodo.title}
-      </label>
+      <div key={optimisticItem.id} className='w-full p-2 flex flex-col border even:bg-gray-100 rounded-md'>
+        <div className='flex justify-between'>
+          <span className='font-semibold'>{optimisticItem.title}</span>
+          {optimisticItem.rack && optimisticItem.place && <span>{optimisticItem.rack} / {optimisticItem.place}</span>}
+        </div>
 
-      <DeleteForm id={optimisticTodo.id} />
+        {optimisticItem.info && <small>{optimisticItem.info}</small>}
+        {optimisticItem.id.length > 3 && <DeleteForm id={optimisticItem.id} />}
+      </div>
     </li>
   )
 }
