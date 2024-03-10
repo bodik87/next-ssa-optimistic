@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+input {
+  @apply w-full border-2 rounded-md px-4 py-3 outline-none;
+}
+
+button {
+  @apply border rounded-md px-3 py-2 disabled:opacity-50;
+}

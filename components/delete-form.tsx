@@ -1,17 +1,5 @@
-"use client";
-
-import { useFormStatus } from "react-dom";
 import { deleteItemAction } from "@/app/actions";
-
-function DeleteButton() {
-  const { pending } = useFormStatus()
-
-  return (
-    <button type='submit' disabled={pending}>
-      Delete
-    </button>
-  )
-}
+import Button from "./button";
 
 async function action(data: FormData) {
   const id = data.get('id')
@@ -26,11 +14,10 @@ async function action(data: FormData) {
 }
 
 export function DeleteForm({ id }: { id: string }) {
-
   return (
     <form action={action}>
       <input type="hidden" name="id" value={id} />
-      <DeleteButton />
+      <Button label="Delete" color="delete" />
     </form>
   );
 }
