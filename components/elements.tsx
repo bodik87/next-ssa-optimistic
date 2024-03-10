@@ -54,8 +54,12 @@ export default function Elements({ items }: { items: Item[] }) {
           el.title
             .toLowerCase()
             .replace(/\s+/g, "")
-            .includes(query.toLowerCase().replace(/\s+/g, ""))
+            .includes(query.toLowerCase().replace(/\s+/g, "")) || el?.info
+              ?.toLowerCase()
+              .replace(/\s+/g, "")
+              .includes(query.toLowerCase().replace(/\s+/g, ""))
       );
+
 
   return (
     <>
@@ -129,7 +133,8 @@ export default function Elements({ items }: { items: Item[] }) {
             type='search'
             autoComplete='off'
             name='query'
-            placeholder='Search' />
+            placeholder='Search'
+            className='border-yellow-500' />
 
           {query && <div onClick={handleClick} className='cursor-pointer p-3 absolute right-px top-1/2 -translate-y-1/2'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -141,18 +146,19 @@ export default function Elements({ items }: { items: Item[] }) {
       )}
 
       {query.length > 1 && filteredItems.length > 0 &&
-        <div className='mt-2 flex flex-col gap-2'>
+        <div className='mt-2 flex flex-col gap-2 h-36 overflow-y-auto'>
           {filteredItems?.map(
             el =>
-              <div className='p-2 border even:bg-gray-100 rounded-md flex justify-between' key={el.id}>
-                <span>{el.title}</span>
-                <div>
-                  <span>{el.rack}-{el.place}</span>
+              <div key={el.id} className='p-2 flex flex-col border even:bg-gray-100 rounded-md'>
+                <div className='flex justify-between'>
+                  <span className='font-semibold'>{el.title}</span>
+                  {el.rack && el.place && <span>{el.rack} / {el.place}</span>}
                 </div>
 
+                {el.info && <small>{el.info}</small>}
               </div>
           )}
-        </div>}
+        </div >}
     </>
   )
 }
