@@ -5,12 +5,8 @@ import type { Item } from '@prisma/client'
 import { createItemAction } from '@/app/actions'
 import Button from '@/components/button'
 import Link from 'next/link'
-import { useStore } from '@/app/store'
-import Auth from '../app/auth/page'
 
 export default function Elements({ items }: { items: Item[] }) {
-
-  const addItemsToStore = useStore((state) => state.addItemsToStore);
 
   const formRef = useRef<HTMLFormElement>(null)
   const queryRef = useRef<HTMLInputElement>(null)
@@ -69,7 +65,6 @@ export default function Elements({ items }: { items: Item[] }) {
   return (
     <>
       <Link href={"/items"}
-        onClick={() => addItemsToStore(items)}
         className='mb-2 w-full link text-center bg-gray-300'>
         All items
       </Link>
