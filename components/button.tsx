@@ -11,7 +11,7 @@ type ButtonProps = {
 export default function Button({ label, color, width }: ButtonProps) {
   const { pending } = useFormStatus()
   return (
-    <button type='submit' className={`${color === "create" ? "bg-blue-600" : "bg-red-500"} text-white ${width === "full" ? "w-full" : "w-fit"}`} disabled={pending}>
+    <button type='submit' className={`${color === "create" ? "bg-green-600" : "bg-red-500"} text-white ${width === "full" ? "w-full" : "w-fit"}`} disabled={pending}>
       {label}
     </button >
   )

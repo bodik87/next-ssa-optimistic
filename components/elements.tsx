@@ -64,13 +64,10 @@ export default function Elements({ items }: { items: Item[] }) {
 
   return (
     <>
-      <Link href={"/items"}
-        className='mb-2 w-full link text-center bg-gray-300'>
-        All items
-      </Link>
-
       {visibleCreateForm &&
         <>
+          <h2 className='my-4 font-semibold text-center'>Create item</h2>
+
           <form
             ref={formRef}
             action={action}
@@ -109,7 +106,7 @@ export default function Elements({ items }: { items: Item[] }) {
           </form>
           <button
             type='button'
-            className='mt-2 w-full'
+            className='mt-2'
             onClick={() => setVisibleCreateForm(false)}>
             Cancel
           </button>
@@ -119,7 +116,7 @@ export default function Elements({ items }: { items: Item[] }) {
       {!visibleCreateForm &&
         <button
           type='button'
-          className='mt-2 w-full bg-green-600 text-white'
+          className='w-full bg-green-600 text-white'
           onClick={() => setVisibleCreateForm(true)}>
           Create item
         </button>
