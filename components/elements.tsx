@@ -6,6 +6,7 @@ import { createItemAction } from '@/app/actions'
 import Button from '@/components/button'
 import Link from 'next/link'
 import { useStore } from '@/app/store'
+import Auth from '../app/auth/page'
 
 export default function Elements({ items }: { items: Item[] }) {
 
