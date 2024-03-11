@@ -29,7 +29,7 @@ export async function login(formData: FormData) {
 
     if (login === USER) {
       // Create the session
-      const expires = new Date(Date.now() + 3600 * 100000 * 24);
+      const expires = new Date(Date.now() + 3600 * 1000 * 24);
       const session = await encrypt({ login, expires });
 
       // Save the session in a cookie
@@ -59,7 +59,7 @@ export async function updateSession(request: NextRequest) {
 
   // Refresh the session so it doesn't expire
   const parsed = await decrypt(session);
-  parsed.expires = new Date(Date.now() + 10 * 1000);
+  parsed.expires = new Date(Date.now() + 3600 * 1000 * 24);
   const res = NextResponse.next();
   res.cookies.set({
     name: "session",
