@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const secretKey = "secret";
-const USER = "bo";
+const USER = "Bogdan";
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload: any) {
